@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "concurrently \"ng serve --proxy-config proxy.conf.json\" \"node app.js 80 DEV\" \"rethinkdb\" ",
-    "prod": "concurrently \"ng serve --prod --port 2500 --host 0.0.0.0 --no-progress --proxy-config proxy-prod.conf.json\" \"node app.js 2500 PROD\"",
+    "prod": "concurrently \"ng serve --prod --port 2500 --host 0.0.0.0 --no-progress --proxy-config proxy-prod.conf.json\" \"node app.js 2501 PROD\"",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
     "pree2e": "webdriver-manager update",
@@ -22,6 +22,7 @@
     "@angular/platform-browser": "~2.0.0",
     "@angular/platform-browser-dynamic": "~2.0.0",
     "@angular/router": "~3.0.0",
+    "angular2-materialize": "^6.7.1",
     "core-js": "^2.4.1",
     "express": "^4.14.0",
     "express-session": "^1.14.1",
@@ -40,7 +41,7 @@
     "zone.js": "^0.6.23"
   },
   "devDependencies": {
-    "@types/jasmine": "^2.2.30",
+    "@types/jasmine": "~2.2.0",
     "@types/node": "^6.0.42",
     "angular-cli": "1.0.0-beta.17",
     "codelyzer": "~0.0.26",

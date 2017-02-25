@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 var promise = require('promise');
-var config = require('app.node.config');
+var config = require('./app.node.config');
 
 //juanswood23@gmail.com
 //gr@p3fru1t
