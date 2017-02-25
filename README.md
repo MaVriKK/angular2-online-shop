@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Idea23
 
 This project was generated with [angular-cli](https://github.com/angular/angular-cli) version 1.0.0-beta.17.
@@ -29,3 +30,7 @@ Run `ng github-pages:deploy` to deploy to Github Pages.
 ## Further help
 
 To get more help on the `angular-cli` use `ng --help` or go check out the [Angular-CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+=======
+# angular2-online-shop
+online shopping/vendor website built with angular 2, materializecss, &amp; nodejs
+>>>>>>> 325a964f3d0fb3b4bca3988c243e7b65a1197cf6
