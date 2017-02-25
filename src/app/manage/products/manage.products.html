@@ -1,0 +1,148 @@
+<div class="container" *ngIf="auth.authenticated">
+    <!--products-->
+    <div class="row">
+        <div class="col s12">
+            <h1>Products</h1>
+        </div>
+        <div class="col s12">
+            <a class="valign btn-large waves-effect waves-light red" (click)="addProduct()"><i class="material-icons">add</i> New Product</a>
+        </div>
+    </div>
+
+    <div>
+        <div class="card hoverable" *ngFor="let product of productList; let productIndex = index">
+            <div class="card-content">
+                <p class="center" style="color: #EEE; margin-bottom: 5px">{{product.id}}</p>
+                <div class="row">
+                    <div class="col s4">
+                        <div class="input-field col s12">
+                            <input [(ngModel)]="product.name" id="productName" type="text" />
+                            <label for="productName" class="active">Product Name</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input [(ngModel)]="product.id" type="text" disabled/>
+                            <label class="active">Id <small>Must be unique & cannot be changed</small></label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input [(ngModel)]="product.imgUrl" id="productImgUrl" type="url" class="validate" />
+                            <label for="productImgUrl" class="active">Img URL</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input [(ngModel)]="product.priceRange" type="text" />
+                            <label class="active">Price range</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <textarea [(ngModel)]="product.details" id="details" class="materialize-textarea"></textarea>
+                            <label for="details" class="active">Details</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <textarea [(ngModel)]="product.detailsLong" id="detailsLong" class="materialize-textarea"></textarea>
+                            <label for="detailsLong" class="active">Details Long</label>
+                        </div>
+                        <div class="col s12">
+                            <a class="btn btn-block" [ngClass]="{'blue': product.isDiscontinued == false, 'red': product.isDiscontinued == true}"  (click)="product.isDiscontinued = !product.isDiscontinued">
+                                Is discontinued {{product.isDiscontinued}}
+                            </a>
+                        </div>
+                        <div *ngIf="product.id.length > 0">
+                            <div class="input-field col s12">
+                                <a class="btn btn-block purple" (click)="saveProduct(product)">
+                                    Save
+                                </a>
+                            </div>
+                            <div class="input-field col s12">
+                                <!--<a class="btn btn-block red" (click)="removeProduct(productIndex, product)" disabled>
+                                    Remove Product
+                                </a>-->
+                                <a class="btn btn-block red" disabled>
+                                    Remove Product
+                                </a>
+                            </div>
+                        </div>
+                        <div *ngIf="product.id.length == 0">
+                            <h4 class="center">Id required</h4>
+                        </div>
+
+                        <!--result-->
+                        <div class="row" *ngIf="productResult[product.id]">
+                            <div class="col s12">
+                                <ul class="collection">
+                                    <li class="collection-item">
+                                        Date {{productResult[product.id].date | date : 'medium'}}
+                                    </li>
+                                    <li class="collection-item">
+                                        Errors {{productResult[product.id].errors}}
+                                    </li>
+                                    <li class="collection-item">
+                                        Deleted {{productResult[product.id].deleted}}
+                                    </li>
+                                    <li class="collection-item">
+                                        Inserted {{productResult[product.id].inserted}}
+                                    </li>
+                                    <li class="collection-item">
+                                        Replaced {{productResult[product.id].replaced}}
+                                    </li>
+                                    <li class="collection-item">
+                                        Skipped {{productResult[product.id].skipped}}
+                                    </li>
+                                    <li class="collection-item">
+                                        Unchanged {{productResult[product.id].unchanged}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col s8">
+                        <div *ngIf="product.id.length > 0">
+                            <a class="btn btn-block btn-sm blue" (click)="addOption(product)">Add Option</a>
+                            <ul class="collection with-header" *ngFor="let optionKey of keys(product.options);">
+                                <p class="center">{{optionKey}}</p>
+                                <li class="collection-header">
+                                    <a class="btn btn-sm right" (click)="removeOption(optionKey, product)">Remove Option</a>
+
+                                    <label class="active">Option Name</label>
+                                    <input [(ngModel)]="product.options[optionKey].name" type="text"/>
+
+                                    <label class="active">Image Url</label>
+                                    <input [(ngModel)]="product.options[optionKey].imgUrl" type="url" class="validate" />
+                                </li>
+                                <li class="collection-item">
+                                    <a class="btn btn-block btn-sm grey" (click)="addDimension(optionKey, product.options[optionKey])">
+                                        Add Dimension
+                                    </a>
+                                </li>
+                                <li class="collection-item" *ngFor="let dimKey of keys(product.options[optionKey].dimensions); let j = index">
+                                    <div class="row">
+                                        <div class="col s8">
+                                            <label class="active">Dimension Name/Specs</label>
+                                            <input [(ngModel)]="product.options[optionKey].dimensions[dimKey].name" type="text" />
+                                        </div>
+                                        <div class="col s2">
+                                            <label class="active">ID</label>
+                                            <input [(ngModel)]="product.options[optionKey].dimensions[dimKey].id" type="text" disabled/>
+                                        </div>
+                                        <div class="col s2">
+                                            <a class="btn btn-block red" (click)="removeDimension(j, product.options[optionKey].dimensions)">
+                                                <i class="material-icons">remove</i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s6">
+                                            <label class="active">Price</label>
+                                            <input [(ngModel)]="product.options[optionKey].dimensions[dimKey].price" type="number"/>
+                                        </div>
+                                        <div class="col s6">
+                                            <label class="active">Quantity</label>
+                                            <input [(ngModel)]="product.options[optionKey].dimensions[dimKey].quantity" type="number"/>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

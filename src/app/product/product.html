@@ -1,0 +1,60 @@
+<div class="container">
+	<div *ngIf="product">
+		<form #productForm="ngForm">
+			<div class="card hoverable">
+				<div class="card-content">
+					<div class="row">
+						<div class="col l7 s12">
+							<img class="responsive-img" src="{{selImage.url}}">
+							<div class="row">
+								<div class="col s4">
+									<a class="waves-effect waves-light btn grey darken-1" (click)="cycleImg(true)"><i class="material-icons left">skip_previous</i></a>
+								</div>
+								<div class="col s4">
+									<p class="center">{{selImage.name}}</p>
+								</div>
+								<div class="col s4">
+									<a class="waves-effect right waves-light btn grey darken-1" (click)="cycleImg(false)"><i class="material-icons left">skip_next</i></a>
+								</div>
+							</div>
+						</div>
+						<div class="col l5 s12">
+							<div class="row">
+								<div class="col s12">
+									<h3>{{product.name}}</h3>
+									<p style="margin-top: 0px">
+										{{product.detailsLong}}
+									</p>
+									<div *ngFor="let optionKey of keys(product.options)">
+										<p style="font-weight: 600; margin-bottom: 0px">{{product.options[optionKey].name}}</p>
+										<p *ngFor="let dimKey of keys(product.options[optionKey].dimensions)" style="margin-top: 0px; margin-bottom: 0px;">{{product.options[optionKey].dimensions[dimKey].name}}</p>
+									</div>
+								</div>
+							</div>
+							<div class="row" *ngIf="productOptionsList">
+								<div class="col s12">
+									<div class="input-field col s12">
+										<select materialize="material_select" style="width: 100%"  [materializeSelectOptions]="selectOptions" [(ngModel)]="selDimension" (ngModelChange)="onDimChange($event)"
+											[ngModelOptions]="{standalone: true}">
+                                            <optgroup *ngFor="let option of productOptionsList" label="{{option.name}}">
+                                                <option *ngFor="let dim of option.dimensionsList" [ngValue]="dim">{{dim.name}} [{{dim.price | currency : 'USD' : true}}] {{dim.quantity == 0 ? "Sold Out" : ""}}</option>
+                                            </optgroup>
+                                        </select>
+										<label class="active">Optgroups</label>
+									</div>
+									<div class="input-field col s12" *ngIf="selDimension.quantity > 0">
+										<a class="waves-effect waves-light btn-large" (click)="processSelection()"><i class="material-icons left" >loyalty</i>Add To Cart</a>
+									</div>
+									<div class="input-field col s12" *ngIf="selDimension.quantity == 0">
+										<a class="waves-effect waves-light btn-large disabled"><i class="material-icons left" >loyalty</i>Add To Cart</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!--row-->
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

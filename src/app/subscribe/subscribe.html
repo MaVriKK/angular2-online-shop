@@ -1,0 +1,22 @@
+<div class="container">
+    <h3 class="center">Subscribe</h3>
+    <p class="center">Receive product updates & special offers</p>
+    <div class="row">
+        <div class="col s12 m4 offset-m4" *ngIf="!resp.success">
+            <div class="input-field col s12">
+                <input id="email" type="email" class="validate" [(ngModel)]="user.email">
+                <label for="email" class="active">Email</label>
+            </div>
+            <div class="input-field col s12">
+                <input id="firstname" type="text" class="validate" [(ngModel)]="user.name">
+                <label for="firstname" class="active">What should we call you?</label>
+            </div>
+            <div class="input-field col s12">
+                <a class="btn btn-block waves-effect waves-light" (click)="subscribe()">Subscribe</a>
+            </div>
+        </div>
+        <div class="col s12 m4 offset-m4">
+            <h3 class="center">{{resp.msg}}</h3>
+        </div>
+    </div>
+</div>

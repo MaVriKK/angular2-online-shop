@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="card">
+        <div class="card-content">
+            <div *ngIf="order.id">
+                <img src="assets/imgs/assets/general/satisfaction.png" class="right" style="height: 150px;" />
+                <h5>Order Status <span style="color: red">[</span>{{order.status || "Processing"}}<span style="color: red">]</span></h5>
+                <p>Created on {{order.create_time | date : 'medium'}}</p>
+                <p>{{order.payer.payer_info.email}}</p>
+
+                <h5>Shipping address</h5>
+                <div class="row">
+                    <div class="col s4">
+                        <p>{{order.transactions[0].item_list.shipping_address.recipient_name}}</p>
+                        <p>{{order.transactions[0].item_list.shipping_address.line1}}</p>
+                        <p>{{order.transactions[0].item_list.shipping_address.city}}, {{order.transactions[0].item_list.shipping_address.state}}
+                            {{order.transactions[0].item_list.shipping_address.postal_code}}
+                        </p>
+                        <p>{{order.transactions[0].item_list.shipping_address.country}}</p>
+                    </div>
+                </div>
+
+                <h5>Order Details</h5>
+                <ul class="collection" style="width: 100%">
+                    <li class="collection-item hoverable" *ngFor="let productKey of keys(order.product_list_mapped)">
+                        <div class="row">
+                            <div class="col m3 s12">
+                                <img src="{{order.product_list_mapped[productKey].imgUrl}}" class="responsive-img">
+                            </div>
+                            <div class="col m9 s12">
+                                <div class="row">
+                                    <div class="col s8">
+                                        <h5 class="title">{{order.product_list_mapped[productKey].name}}</h5>
+                                        <h6>{{order.product_list_mapped[productKey].dimensions[order.product_list_mapped[productKey].dimensionID].optionName}}</h6>
+                                        <h6>{{order.product_list_mapped[productKey].dimensions[order.product_list_mapped[productKey].dimensionID].name}}</h6>
+                                        <h6><span style="font-size: 9pt">quantity</span> {{order.product_list_mapped[productKey].dimensions[order.product_list_mapped[productKey].dimensionID].quantity}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div *ngIf="errorFlag == true">
+                <img src="./app/imgs/assets/Misfits Stamp/logo.png" class="right" style="height: 150px;"/>
+                <h3>Mmmmm... something went wrong</h3>
+                <h4>Email sal@idea23.co for help!</h4>
+                <small>Sorry for about this :(</small>
+            </div>
+        </div>
+    </div>
+</div>
